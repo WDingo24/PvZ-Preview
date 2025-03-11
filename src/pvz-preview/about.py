@@ -1,17 +1,12 @@
-from structs import abstracts
+import structs.abstracts
 
 from typing import Any
 
 import tkinter as tk
 from tkinter import ttk
 
-class About(tk.Toplevel, abstracts.Singleton):
-    @classmethod
-    def show(cls) -> Any:
-        if cls.instance is None or not cls.instance.winfo_exists():
-            cls.instance = cls()
-        return cls.instance
-
+@structs.abstracts.singleton
+class About(tk.Toplevel):
     def __init__(self, cnf: dict={}, **kwargs) -> None:
         kwargs = cnf or kwargs
         super().__init__(**kwargs)
@@ -21,17 +16,10 @@ class About(tk.Toplevel, abstracts.Singleton):
         self.resizable(False, False)
 
         ttk.Label(self, text="Version: 0.1.25").pack()
-        ttk.Button(self, text="License", command=lambda: License.show(master=self)).pack()
+        ttk.Button(self, text="License", command=lambda: License(master=self)).pack()
 
-class License(tk.Toplevel, abstracts.Singleton):
-    @classmethod
-    def show(cls, cnf: dict={}, **kwargs):
-        kwargs = cnf or kwargs
-
-        if cls.instance is None or not cls.instance.winfo_exists():
-            cls.instance = cls(**kwargs)
-        return cls.instance
-
+@structs.abstracts.singleton
+class License(tk.Toplevel):
     def __init__(self, cnf: dict={}, **kwargs) -> None:
         kwargs = cnf or kwargs
         super().__init__(**kwargs)
