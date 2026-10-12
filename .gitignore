@@ -2,3 +2,4 @@ structs
 __pycache__
 test
 .venv
+.DS_store
